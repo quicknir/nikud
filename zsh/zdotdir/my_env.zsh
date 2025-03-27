@@ -1,6 +1,4 @@
-location=$(readlink -f ${(%):-%N})
-export ZDOTDIR=${location:h}
-unset location
+export ZDOTDIR=${${(%):-%x}:P:h}
 
 # Dir bookmarks are potentially used in previewing recent dirs
 hash -d nikud="${ZDOTDIR:h:h}"
@@ -11,6 +9,8 @@ typeset -U path PATH
 # Uses the repo's built in mamba setup - devtools env gives us access to things like eza and bat
 # needed in env not rc because fzf previews launch in a non-interactive subshell
 path[1,0]=~nikud/micromamba/envs/devtools/bin
+# If using the built in downloaded micromamba, have it on the path
+path[1,0]=~nikud/micromamba/bin
 
 # Useful to define editor "early" as it may be used by other code to set defaults, e.g. tmux
 export EDITOR=vim

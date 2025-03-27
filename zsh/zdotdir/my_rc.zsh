@@ -109,9 +109,12 @@ bindkey -M vicmd "^E" edit-command-line
 # zle -N rg_fzf_search_widget
 # bindkey -M vicmd "s" rg_fzf_search_widget
 
-
 # Support for GUI clipboard
 source $ZDOTDIR/clipboard.zsh
+
+# We want to call this before sourcing ignore/host specific file in case they want to
+# activate environments
+eval "$(micromamba shell hook --shell zsh)"
 
 # A separate file that gets sourced; convenient for putting things you may not want to upstream
 maybe_source $ZDOTDIR/ignore_rc.zsh
