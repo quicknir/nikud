@@ -13,3 +13,5 @@ xdg_config_home/git/ignore.inc
 xdg_config_home/htop
 xdg_config_home/btop/btop.log
 xdg_config_home/tmux/plugins
+xdg_config_home/ipython/profile_default/startup/README
+xdg_config_home/ipython/profile_default/history.sqlite
