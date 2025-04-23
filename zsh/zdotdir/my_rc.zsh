@@ -275,6 +275,7 @@ preexec() {
     >$TTY echo -ne '\e[5 q' ;
 } # Use beam shape cursor for each new prompt.
 
+# ~~~THEME
 . "${ZDOTDIR:h}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 fast-theme -q "${XDG_CONFIG_HOME}/fsh/fast-syntax-solarized.ini"
 

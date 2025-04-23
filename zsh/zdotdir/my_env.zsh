@@ -45,8 +45,10 @@ function __file_entries() {
 
 # This is done like this just to avoid needing the dependency on vivid everywhere
 # to change the ls colors theme, use vivid generate solarized-light.yml > ls_colors.txt
+# ~~~THEME
 export LS_COLORS=$(cat ~nikud/zsh/ls_colors.txt)
 
+# ~~~THEME
 export BAT_THEME='Solarized (light)'
 
 function __fzf_ls_bat_preview() {
