@@ -103,12 +103,6 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd "^E" edit-command-line
 
-# Unused; come back to this
-# rg/fzf interactive search widget
-# rg_fzf_search_widget() { "${ZDOTDIR}/search.sh" }
-# zle -N rg_fzf_search_widget
-# bindkey -M vicmd "s" rg_fzf_search_widget
-
 # Support for GUI clipboard
 source $ZDOTDIR/clipboard.zsh
 
@@ -168,6 +162,7 @@ bindkey -v '^L' my-cd-forward
 bindkey -v '^J' fzf-cd-widget
 bindkey -v '^T' fzf-file-widget
 bindkey -v '^R' fzf-history-widget
+bindkey -v '^S' fzf-rg-widget
 
 maybe_source "$ZDOTDIR/ignore_rc.zsh"
 

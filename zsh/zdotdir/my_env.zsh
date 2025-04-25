@@ -62,6 +62,16 @@ function __fzf_ls_bat_preview() {
   fi
 }
 
+function __fzf_rg_widget() {
+  # (z) to do argument splitting like the shell, (Q) to remove extra quotes
+  x=(${(Q)${(z)@}})
+  # For empty query, we want to match every line in rg, so we can use fzf
+  if [[ ${#x} -eq 0 ]]; then
+    x=('')
+  fi
+  rg --column --line-number --no-heading --color=always --smart-case "${(@)x}"
+}
+
 # A useful function and we already need it so may as well define it here
 function maybe_source () {
     test -f $1 && . $1
