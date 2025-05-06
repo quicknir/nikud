@@ -18,6 +18,11 @@ function symlink_and_bak() {
 repo_dir=$(dirname $(realpath "$0"))
 symlink_and_bak "${repo_dir}/zsh/zdotdir/my_env.zsh" "${HOME}/.zshenv"
 mamba_dir="${repo_dir}/micromamba"
-curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj -C "$mamba_dir" bin/micromamba
+if [[ $(uname) == "Darwin" ]] ; then
+  mamba_url="osx-64"
+else
+  mamba_url="linux-64"
+fi
+curl -Ls "https://micro.mamba.pm/api/micromamba/${mamba_url}/latest" | tar -xvj -C "$mamba_dir" bin/micromamba
 "${mamba_dir}/bin/micromamba" -r "$mamba_dir" create -f "${mamba_dir}/devtools.yaml" -y
 echo Install fonts - Jetbrains Mono Nerd Font from https://www.nerdfonts.com/font-downloads
