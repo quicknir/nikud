@@ -48,9 +48,6 @@ function __file_entries() {
 # ~~~THEME
 export LS_COLORS=$(cat ~nikud/zsh/ls_colors.txt)
 
-# ~~~THEME
-export BAT_THEME='Solarized (light)'
-
 function __fzf_ls_bat_preview() {
   # This expansion is to force expanding any directory bookmarks, which often show up in the arguments
   # to preview
