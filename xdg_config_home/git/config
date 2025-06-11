@@ -11,3 +11,5 @@
 conflictStyle=diff3
 [include]
 	path = ignore.inc
+[push]
+	autoSetupRemote = true
