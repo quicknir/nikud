@@ -77,9 +77,9 @@ e() {
 # utility function; open script files for editing if not executable, otherwise execute
 __exec_or_edit() {
     if [[ -x $1 ]]; then
-        $1
+        "$@"
     else
-        e $1
+        e "$1"
     fi
 }
 alias -s {sh,zsh,py}=__exec_or_edit
