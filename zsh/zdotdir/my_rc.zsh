@@ -164,8 +164,6 @@ bindkey -v '^T' fzf-file-widget
 bindkey -v '^R' fzf-history-widget
 bindkey -v '^S' fzf-rg-widget
 
-maybe_source "$ZDOTDIR/ignore_rc.zsh"
-
 unsetopt LIST_BEEP
 
 # From prezto
