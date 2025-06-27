@@ -1,3 +1,7 @@
+keybinding:
+  universal:
+    nextTab: '<c-l>'
+    prevTab: '<backspace>'
 customCommands:
   - key: 'P'
     command: "git push {{.SelectedRemote.Name}} {{.SelectedLocalCommit.Sha}}:{{.SelectedLocalBranch.Name}}"
