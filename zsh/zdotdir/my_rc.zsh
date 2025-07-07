@@ -193,6 +193,18 @@ unsetopt HUP              # Don't kill jobs on shell exit.
 # by default backspace is vi-delete-char which has some pretty funky behavior
 bindkey "^?" backward-delete-char
 
+# Home and End seem to do weird, terminal dependent things
+# the binding below tested with vscode terminal emulator and windows terminal emulator
+bindkey -v "^[[1~" beginning-of-line
+bindkey -a "^[[1~" beginning-of-line
+bindkey -M viopp "^[[1~" beginning-of-line
+bindkey -M visual "^[[1~" beginning-of-line
+
+bindkey -v "^[[4~" end-of-line
+bindkey -a "^[[4~" end-of-line
+bindkey -M viopp "^[[4~" end-of-line
+bindkey -M visual "^[[4~" end-of-line
+
 # history
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt SHARE_HISTORY             # Share history between all sessions.
