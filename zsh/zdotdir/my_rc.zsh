@@ -35,25 +35,6 @@ alias ln='ln -i'
 alias mv='mv -i'
 alias rm='rm -i'
 
-# Our tmux conf contains:
-# set-option -ga update-environment VSCODE_IPC_HOOK_CLI
-# This ensures that every time a tmux session is created *or* attached to,
-# the value of VSCODE_IPC_HOOK_CLI is copied into the environment of the *session*.
-# If the variable isn't defined in the parent, it gets unset in the session.
-# Individual windows may still have "stale" values of VSCODE_IPC_HOOK_CLI, but
-# our functions below solve this issue by "grabbing" the correct value
-# of VSCODE_IPC_HOOK_CLI from tmux. This also makes whether VSCODE_IPC_HOOK_CLI is set
-# a reliable indicator of whether we are running inside vscode - TERM_PROGRAM gets
-# overwritten by tmux, so it's not reliable when tmux is nested inside vscode.
-
-__get_vscode_ipc__() {
-  if [[ -v TMUX ]]; then
-    eval $(tmux show-env -s VSCODE_IPC_HOOK_CLI 2>/dev/null)
-  fi
-}
-
-alias code='__get_vscode_ipc__ && code'
-
 lazygit() {
   __get_vscode_ipc__
   if [[ $VSCODE_IPC_HOOK_CLI != "" ]]; then
