@@ -79,10 +79,16 @@ edit_output() {
 # For better vi usability, reduce key delay/timeout
 KEYTIMEOUT=1
 
+# Utility function to reduce repetition when binding widgets
+function widget-and-bind() {
+  local widget_name=${@[-1]}
+  builtin zle -N $widget_name
+  builtin bindkey "$@"
+}
+
 # Edit command in full blown vim; bound to normal mode C-e
 autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd "^E" edit-command-line
+widget-and-bind -M vicmd "^E" edit-command-line
 
 # Support for GUI clipboard
 source $ZDOTDIR/clipboard.zsh
@@ -133,17 +139,7 @@ function my-cd-up()      { builtin cd -q .. && my-redraw-prompt; }
 function my-cd-back()    { my-cd-rotate +1; }
 function my-cd-forward() { my-cd-rotate -0; }
 
-builtin zle -N my-cd-up
-builtin zle -N my-cd-back
-builtin zle -N my-cd-forward
-
-bindkey -v '^K' my-cd-up
-bindkey -v '^H' my-cd-back
-bindkey -v '^L' my-cd-forward
-bindkey -v '^J' fzf-cd-widget
-bindkey -v '^T' fzf-file-widget
-bindkey -v '^R' fzf-history-widget
-bindkey -v '^S' fzf-rg-widget
+# Wait to bind these functions until fzf functionality has loaded
 
 unsetopt LIST_BEEP
 
@@ -236,6 +232,16 @@ zstyle ':completion:*:descriptions' format '[%d]'
 # Note the order - fzf.zsh also handles fzf-tab - which must be loaded after compinit, but
 # before autosuggestions and syntax highlighting
 source "$ZDOTDIR/fzf.zsh"
+
+# bind keys now that fzf is loaded
+widget-and-bind -v '^K' my-cd-up
+widget-and-bind -v '^H' my-cd-back
+widget-and-bind -v '^L' my-cd-forward
+
+widget-and-bind -v '^J' fzf-cd-widget
+widget-and-bind -v '^T' fzf-file-widget
+widget-and-bind -v '^R' fzf-history-widget
+widget-and-bind -v '^S' fzf-rg-widget
 
 # Change cursor shape for different vi modes.
 # https://unix.stackexchange.com/questions/433273/changing-cursor-style-based-on-mode-in-both-zsh-and-vim

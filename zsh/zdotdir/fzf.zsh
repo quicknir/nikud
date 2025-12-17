@@ -49,7 +49,6 @@ fzf-cd-widget() {
   local ret=$?
   return $ret
 }
-zle -N fzf-cd-widget
 
 __fsel() {
   local search_dir="."
@@ -80,8 +79,6 @@ fzf-file-widget() {
   return $ret
 }
 
-zle -N fzf-file-widget
-
 __hist_sel() {
   setopt localoptions pipefail no_aliases 2> /dev/null
   local item
@@ -100,8 +97,6 @@ fzf-history-widget() {
   zle reset-prompt
   return $ret
 }
-
-zle -N fzf-history-widget
 
 function fzf-rg-widget() {
   rm -f /tmp/rg-fzf-{r,f}
@@ -122,5 +117,3 @@ function fzf-rg-widget() {
       --bind 'enter:execute(code -g {1}:{2})'
   zle reset-prompt
 }
-
-zle -N fzf-rg-widget
