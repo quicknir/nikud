@@ -1,7 +1,3 @@
-[submodule "tmux/oh-my-tmux"]
-	path = tmux/oh-my-tmux
-	url = git@github.com:quicknir/oh-my-tmux.git
-
 # zsh plugins
 [submodule "terminal/fzf-tab"]
 	path = zsh/fzf-tab
