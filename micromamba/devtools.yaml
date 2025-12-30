@@ -14,3 +14,6 @@ dependencies:
   - git-delta
   - lazygit
   - btop
+  - atuin
+# This is for tmux cpu status
+  - sysstat
