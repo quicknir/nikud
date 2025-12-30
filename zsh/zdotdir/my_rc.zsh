@@ -16,6 +16,8 @@ fi
 # To customize prompt, run `p10k configure` or edit $ZDOTDIR/.p10k.zsh.
 [[ ! -f "${ZDOTDIR}/.p10k.zsh" ]] || source "${ZDOTDIR}/.p10k.zsh"
 
+eval "$(atuin init zsh --disable-ctrl-r --disable-up-arrow)"
+
 # *** ALIASES ***
 alias ls='eza --icons --group-directories-first'
 alias ll='eza -l --icons --group-directories-first --git'
