@@ -25,3 +25,13 @@
 	path = xdg_config_home/nvim/pack/plugins/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
 	shallow = true
+
+# tmux plugins
+[submodule "xdg_config_home/tmux/plugins/extrakto"]
+	path = xdg_config_home/tmux/plugins/extrakto
+	url = https://github.com/laktak/extrakto.git
+	shallow = true
+[submodule "xdg_config_home/tmux/plugins/tmux-cpu"]
+	path = xdg_config_home/tmux/plugins/tmux-cpu
+	url = https://github.com/tmux-plugins/tmux-cpu.git
+	shallow = true
