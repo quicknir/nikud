@@ -28,12 +28,15 @@ session_color="#{?client_prefix,#[fg=$prefix#,bg=$prefix],}#{?pane_in_mode,#[fg=
 session="#[bg=$regular]$session_color#[fg=brightblack]  #S #[fg=$regular]$session_color#[bg=$sep]$rarrow"
 tmux_set status-left "$session"
 
-# Right status - note that brightred in solarized is orange
-ram="#[fg=brightred]$larrow#[fg=brightblack,bg=brightred] #{ram_icon} #{ram_percentage} "
-cpu="#[fg=cyan]$larrow#[fg=brightblack,bg=cyan] 󰻠 #{cpu_percentage} "
-time="#[fg=red]$larrow#[fg=brightblack,bg=red]  %T " 
-date="#[fg=blue]$larrow#[fg=brightblack,bg=blue]  %F "
-tmux_set status-right "$ram$cpu$time$date"
+# Right status
+function add_rseg() {
+    RS+="#[fg=$1]$larrow#[fg=brightblack,bg=$1] $2 "
+}
+add_rseg brightred "#{ram_icon} #{ram_percentage}"  # note that brightred in solarized is orange
+add_rseg cyan "#{ram_icon} #{ram_percentage}"
+add_rseg red "#{ram_icon} #{ram_percentage}"
+add_rseg blue "#{ram_icon} #{ram_percentage}"
+tmux_set status-right "$RS"
 
 # Window status
 tmux_set window-status-separator ""
