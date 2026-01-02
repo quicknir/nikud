@@ -33,9 +33,9 @@ function add_rseg() {
     RS+="#[fg=$1]$larrow#[fg=brightblack,bg=$1] $2 "
 }
 add_rseg brightred "#{ram_icon} #{ram_percentage}"  # note that brightred in solarized is orange
-add_rseg cyan "#{ram_icon} #{ram_percentage}"
-add_rseg red "#{ram_icon} #{ram_percentage}"
-add_rseg blue "#{ram_icon} #{ram_percentage}"
+add_rseg cyan "󰻠 #{cpu_percentage}"
+add_rseg red " %T"
+add_rseg blue " %F"
 tmux_set status-right "$RS"
 
 # Window status
