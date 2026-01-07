@@ -15,7 +15,7 @@ A dotfiles repo
    - fzf-tab
    - fast-syntax-highlighting
    - autosuggestions
- - Includes a nice tmux setup via oh-my-tmux
+ - Includes a nice simple tmux setup - a nice powerline aesthetic with some informative segments including CPU and RAM usage, various small keybindings and improved defaults, and < 150 lines of code total
  - Some vscode/terminal integration niceties (particularly between vscode and tmux)
  - Includes a basic neovim setup - easy to extend further
  - config of other applications handled via XDG_CONFIG_HOME - no bare repo, no symlinks
