@@ -25,8 +25,7 @@ prefix=red
 copy_mode=yellow
 regular=green
 session_color="#{?client_prefix,#[fg=$prefix#,bg=$prefix],}#{?pane_in_mode,#[fg=$copy_mode#,bg=$copy_mode],}"
-session="#[bg=$regular]$session_color#[fg=brightblack]  #S #[fg=$regular]$session_color#[bg=$sep]$rarrow"
-tmux_set status-left "$session"
+tmux_set status-left "#[bg=$regular]$session_color#[fg=brightblack]  #S #[fg=$regular]$session_color#[bg=$sep]$rarrow"
 
 # Right status
 function add_rseg() {

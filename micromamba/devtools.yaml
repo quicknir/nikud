@@ -9,11 +9,11 @@ dependencies:
   - fd-find
   - nvim
   - bat
-  - zsh
   - fzf
   - git-delta
   - lazygit
   - btop
+  - dua-cli
   - atuin
 # This is for tmux cpu status
   - sysstat
