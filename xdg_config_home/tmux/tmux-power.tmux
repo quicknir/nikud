@@ -44,7 +44,7 @@ inactive=blue
 last=cyan
 window_color="#{?window_last_flag,#[fg=$last#,bg=$last],#[fg=$inactive#,bg=$inactive]}"
 # Note that brightwhite is the background color in solarized light
-window_naming="#I:#($XDG_CONFIG_HOME/tmux/name_window.sh #{pane_pid} #{pane_tty} #{pane_current_path} #W)"
+window_naming="#I:#($XDG_CONFIG_HOME/tmux/name_window.sh #{pane_pid} #{pane_tty} #{pane_current_path} #{pane_id} #W)"
 tmux_set window-status-format "$window_color#[fg=$sep]$rarrow#[fg=brightwhite] $window_naming $window_color#[bg=$sep]$rarrow"
 tmux_set window-status-current-format "#[fg=white,bg=brightwhite]$rarrow#[fg=blue,bold] $window_naming #[fg=brightwhite,bg=white,nobold]$rarrow"
 

@@ -64,10 +64,15 @@ function _window() {
   pane_pid=$1
   pane_tty=$2
   pane_path=$3
-  window_name=$4
+  pane_id=$4
+  window_name=$5
 
-  # If the window name is not empty, just echo and return
-  if [[ -n "$window_name" ]]; then
+  # I'm a bad person
+  zero_width_space="​"
+
+  # If the window name does not end with a zero width space *and* is non-empty
+  # it is a manual name then just return it
+  if [[ "${window_name: -1}" != "$zero_width_space" ]] && [[ -n "$window_name" ]]; then
     echo "$window_name"
     return
   fi
@@ -93,15 +98,16 @@ function _window() {
     [ -z "$username" ] && username=$(ssh $ssh_or_mosh_args -T -o ControlPath=none -o ProxyCommand="sh -c 'echo %%username%% %r >&2'" 2>&1 | awk '/^%username% / { print $2; exit }')
     # shellcheck disable=SC2086
     [ -z "$username" ] && username=$(ssh $ssh_or_mosh_args -v -T -o ControlPath=none -o ProxyCommand=false -o IdentityFile='%%username%%/%r' 2>&1 | awk '/%username%/ { print substr($4,12); exit }')
-    echo "${username}@${hostname}"
+    new_name="${username}@${hostname}"
   elif [[ "${command%% *}" = *"zsh" ]]; then
-    echo ${(D)pane_path}
+    new_name=${(D)pane_path}
   elif [[ "${command%% *}" = *"lazygit" ]]; then
-    echo "" ${(D)pane_path}
+    new_name=" ${(D)pane_path}"
   else
-    echo "${${command%% *}:t}"
+    new_name="${${command%% *}:t}"
   fi
-
+  tmux renamew -t $pane_id "$new_name$zero_width_space"
+  echo $new_name$zero_width_space
 }
 
 _window "$@"
