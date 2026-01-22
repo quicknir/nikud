@@ -37,6 +37,8 @@ alias ln='ln -i'
 alias mv='mv -i'
 alias rm='rm -i'
 
+alias rsync='rsync -avzPu --no-i-r --info=progress2'
+
 lazygit() {
   __get_vscode_ipc__
   if [[ $VSCODE_IPC_HOOK_CLI != "" ]]; then
@@ -281,3 +283,11 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 source ${ZDOTDIR}/color_history.zsh
+
+# If running inside tmux, add a zsh hook on change directory to update tmux's status line
+if [[ -n "$TMUX" ]]; then
+  function __tmux_update_current_path() {
+    tmux refresh-client -S
+  }
+  add-zsh-hook chpwd __tmux_update_current_path
+fi
