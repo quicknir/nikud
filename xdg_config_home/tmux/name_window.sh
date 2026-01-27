@@ -2,7 +2,7 @@
 
 # This script is invoked by tmux to determine the name of the window.
 # It's invoked in tmux-power.tmux as:
-#   #($XDG_CONFIG_HOME/tmux/name_window.sh #{pane_pid} #{pane_tty} #{pane_current_path} #W)
+#   #($XDG_CONFIG_HOME/tmux/name_window.sh #{pane_pid} #{pane_tty} #{pane_p} #W)
 # If the current window name ($4) is non-empty, it is used as the window name and the script exits.
 # Since the default window name is empty, this means that if the user has set a custom name for the
 # window, it will be preserved.
@@ -24,6 +24,9 @@
 
 # _pane_info and _ssh_or_mosh_args are taken close to verbatim from oh-my-tmux
 # https://github.com/gpakosz/.tmux
+# The match and break logic is to stop "descending" down child subprocesses
+# The original code only handled ssh, I added lazygit because lazygit often
+# launches child subprocesses, and we'd rather still show lazygit as the command.
 _pane_info() {
   pane_pid="$1"
   pane_tty="${2##/dev/}"
@@ -35,7 +38,7 @@ _pane_info() {
     END {
       pid = pane_pid
       while (child[pid]) {
-        if (match(command[pid], "^" ssh " |^ssh ")) {
+        if (match(command[pid], "^" ssh " |^ssh |^lazygit")) {
           break
         }
         pid = child[pid]
@@ -57,6 +60,39 @@ _ssh_or_mosh_args() {
   esac
 
  printf '%s' "$args"
+}
+
+# A function that takes one argument, which is a path. If it is over 20 characters,
+# Turn the first path segment into its first letter. Repeat until the path is under 20 characters.
+function _shorten_path() {
+    local p="$1"
+
+    # Split the path into segments.
+    local -a segments
+    segments=("${(@s:/:)p}")
+
+    # Iterate through the segments and shorten them one by one.
+    local i=1
+    # If the first segment starts with ~, skip it
+    if [[ "${segments[1]}" = \~* ]]; then
+        (( i++ ))
+    fi
+    for (( ; i < ${#segments[@]}; i++ )); do
+        if (( ${#p} <= 30 )); then
+            break
+        fi
+
+        # Shorten the segment to its first letter if it's not already a single character or empty
+        if (( ${#segments[i]} > 1 )); then
+            segments[i]="${segments[i][1]}"
+        fi
+
+        # Rebuild the path from the segments.
+        p="${(j:/:)segments}"
+
+    done
+
+    echo "$p"
 }
 
 function _window() {
@@ -100,9 +136,9 @@ function _window() {
     [ -z "$username" ] && username=$(ssh $ssh_or_mosh_args -v -T -o ControlPath=none -o ProxyCommand=false -o IdentityFile='%%username%%/%r' 2>&1 | awk '/%username%/ { print substr($4,12); exit }')
     new_name="${username}@${hostname}"
   elif [[ "${command%% *}" = *"zsh" ]]; then
-    new_name=${(D)pane_path}
+    new_name=$(_shorten_path ${(D)pane_path})
   elif [[ "${command%% *}" = *"lazygit" ]]; then
-    new_name=" ${(D)pane_path}"
+    new_name=" $(_shorten_path ${(D)pane_path})"
   else
     new_name="${${command%% *}:t}"
   fi
