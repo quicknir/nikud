@@ -24,5 +24,5 @@ else
   mamba_url="linux-64"
 fi
 curl -Ls "https://micro.mamba.pm/api/micromamba/${mamba_url}/latest" | tar -xvj -C "$mamba_dir" bin/micromamba
-"${mamba_dir}/bin/micromamba" -r "$mamba_dir" create -f "${mamba_dir}/devtools.yaml" -y
+"${mamba_dir}/bin/micromamba" -r "$mamba_dir" create -f "${mamba_dir}/devtools.yaml" -y -c conda-forge
 echo Install fonts - Jetbrains Mono Nerd Font from https://www.nerdfonts.com/font-downloads

@@ -1,9 +1,7 @@
 name: devtools
-channels:
-  - conda-forge
 dependencies:
   - git
-  - tmux
+  - tmux==3.6a
   - eza
   - ripgrep
   - fd-find
