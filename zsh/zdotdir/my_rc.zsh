@@ -16,7 +16,6 @@ fi
 # To customize prompt, run `p10k configure` or edit $ZDOTDIR/.p10k.zsh.
 [[ ! -f "${ZDOTDIR}/.p10k.zsh" ]] || source "${ZDOTDIR}/.p10k.zsh"
 
-eval "$(atuin init zsh --disable-ctrl-r --disable-up-arrow)"
 
 # *** ALIASES ***
 alias ls='eza --icons --group-directories-first'
@@ -28,8 +27,6 @@ alias mm='micromamba'
 
 alias vi=vim
 alias vim=nvim
-
-alias hist-dur='history -iD 0 | fzf'
 
 # Safe ops. Ask the user before doing anything destructive.
 alias cp='cp -i'
@@ -83,6 +80,7 @@ edit_output() {
 # For better vi usability, reduce key delay/timeout
 KEYTIMEOUT=1
 
+
 # Utility function to reduce repetition when binding widgets
 function widget-and-bind() {
   local widget_name=${@[-1]}
@@ -101,11 +99,18 @@ source $ZDOTDIR/clipboard.zsh
 # activate environments
 eval "$(micromamba shell hook --shell zsh)"
 
+
 # A separate file that gets sourced; convenient for putting things you may not want to upstream
 maybe_source $ZDOTDIR/ignore_rc.zsh
 
+
 # A per host file that optionally gets sourced
 maybe_source $ZDOTDIR/host_$(hostname)_rc.zsh
+
+# Atuin must be initialized after micromamba, so that it's in our PATH
+export ATUIN_HOME="${ZDOTDIR:h}/atuin"
+export ATUIN_THEME_DIR=$ATUIN_HOME
+eval "$(atuin init zsh)"
 
 # recent directories
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -186,7 +191,8 @@ bindkey -a "^[[4~" end-of-line
 bindkey -M viopp "^[[4~" end-of-line
 bindkey -M visual "^[[4~" end-of-line
 
-# history
+# history. Mostly unused because we use atuin, but probably still used by autosuggestions.
+# Or if there are issues with atuin.
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
@@ -196,7 +202,6 @@ setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
 setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
 setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
-setopt HIST_BEEP                 # Beep when accessing non-existent history.
 
 HISTFILE="${ZDOTDIR}/.zsh_history"  # The path to the history file.
 HISTSIZE=10000  # The maximum number of events to save in the internal history.
@@ -244,7 +249,6 @@ widget-and-bind -v '^L' my-cd-forward
 
 widget-and-bind -v '^J' fzf-cd-widget
 widget-and-bind -v '^T' fzf-file-widget
-widget-and-bind -v '^R' fzf-history-widget
 widget-and-bind -v '^S' fzf-rg-widget
 
 # Change cursor shape for different vi modes.
@@ -282,8 +286,6 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=14"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
-source ${ZDOTDIR}/color_history.zsh
-
 # If running inside tmux, add a zsh hook on change directory to update tmux's status line
 if [[ -n "$TMUX" ]]; then
   function __tmux_update_current_path() {
@@ -291,3 +293,5 @@ if [[ -n "$TMUX" ]]; then
   }
   add-zsh-hook chpwd __tmux_update_current_path
 fi
+
+

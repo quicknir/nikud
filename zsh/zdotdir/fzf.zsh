@@ -91,13 +91,6 @@ __hist_sel() {
   return $ret
 }
 
-fzf-history-widget() {
-  LBUFFER="${LBUFFER}$(__hist_sel)"
-  local ret=$?
-  zle reset-prompt
-  return $ret
-}
-
 function fzf-rg-widget() {
   rm -f /tmp/rg-fzf-{r,f}
   RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "

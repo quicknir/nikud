@@ -1,0 +1,20 @@
+[theme]
+name = "solarized"
+parent = "default"
+
+[colors]
+Base = "#268bd2"
+Title = "#2aa198"
+Guidance = "#268bd2"
+AlertInfo = "#268bd2"
+AlertWarn = "#b58900"
+AlertError = "#dc322f"
+Important = "#586e75"
+Annotation = "#6c71c4"
+Muted = "#586e75"
+SyntaxCommand = "#268bd2"
+SyntaxFlag = "#b58900"
+SyntaxString = "#2aa198"
+SyntaxVariable = "#b58900"
+SyntaxOperator = "#859900"
+SyntaxComment = "#586e75"
