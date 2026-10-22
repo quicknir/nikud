@@ -28,7 +28,7 @@ update_check = false
 
 ## which search mode to use for interactive search
 ## possible values: prefix, fulltext, fuzzy, daemon-fuzzy
-# search_mode = "fuzzy"
+search_mode = "fulltext"
 
 ## which search mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "search_mode"
@@ -169,6 +169,10 @@ enter_accept = true
 ## in entering the cursor shape. Available values are "default" and
 ## "{blink,steady}-{block,underline,bar}".
 # keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
+
+[keymap.inspector]
+"ctrl-j" = "inspect-next"
+"ctrl-k" = "inspect-previous"
 
 # network_connect_timeout = 5
 # network_timeout = 30
