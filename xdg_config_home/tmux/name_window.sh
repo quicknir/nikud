@@ -38,7 +38,7 @@ _pane_info() {
     END {
       pid = pane_pid
       while (child[pid]) {
-        if (match(command[pid], "^" ssh " |^ssh |^lazygit")) {
+        if (match(command[pid], "^" ssh " |^ssh |^lazygit |^cmake")) {
           break
         }
         pid = child[pid]
@@ -139,6 +139,11 @@ function _window() {
     new_name=$(_shorten_path ${(D)pane_path})
   elif [[ "${command%% *}" = *"lazygit" ]]; then
     new_name=" $(_shorten_path ${(D)pane_path})"
+  elif [[ "${command%% *}" = *"cmake" ]]; then
+    start_icon="🔨"
+    # remove cmake from start of command since we already have icon
+    command=${command#cmake }
+    new_name="$start_icon $command"
   else
     new_name="${${command%% *}:t}"
   fi
